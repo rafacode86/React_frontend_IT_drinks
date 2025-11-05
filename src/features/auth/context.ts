@@ -7,6 +7,8 @@ export type AuthContextValue = {
   scopes: UserRole[];
   isAuthenticated: boolean;
   isLoading: boolean;
+  isError: boolean;
+  error: unknown;
   login: (credentials: AuthCredentials) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<User>;
   logout: () => Promise<void>;
