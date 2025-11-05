@@ -62,6 +62,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function logout() {
     try {
       await logoutMutation.mutateAsync();
+    } catch (error) {
+      toast({
+        title: "No se pudo cerrar sesion",
+        description: "Vuelve a intentarlo en unos segundos.",
+        variant: "error",
+      });
+      throw error;
     } finally {
       setScopes([]);
     }
@@ -82,7 +89,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isLoading:
       currentUserQuery.isLoading ||
       loginMutation.isPending ||
-      registerMutation.isPending,
+      registerMutation.isPending ||
+      logoutMutation.isPending,
+    isError: currentUserQuery.isError,
+    error: currentUserQuery.error ?? null,
     login,
     register,
     logout,
