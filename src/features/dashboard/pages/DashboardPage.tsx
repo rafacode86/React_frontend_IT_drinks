@@ -131,36 +131,6 @@ export function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              label: "Cocteles",
-              hint: "Explora, edita y publica cada receta de la carta.",
-            },
-            {
-              label: "Ingredientes",
-              hint: "Controla inventario y porcentajes de alcohol.",
-            },
-            {
-              label: "Favoritos",
-              hint: "Destaca las mezclas preferidas de la casa.",
-            },
-            {
-              label: "Eventos",
-              hint: "Planifica catas, talleres y experiencias privadas.",
-            },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 shadow-lg shadow-slate-950/40 transition hover:border-sky-500/60 hover:shadow-sky-500/20"
-            >
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-500">
-                {item.label}
-              </p>
-              <p className="mt-2 text-sm text-slate-300">{item.hint}</p>
-            </div>
-          ))}
-        </div>
       </section>
     </AppLayout>
   );

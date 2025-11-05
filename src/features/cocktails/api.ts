@@ -1,6 +1,6 @@
 import { API_ROUTES } from "@shared/constants";
 import { httpClient } from "@shared/lib/http";
-import type { Cocktail } from "@shared/types";
+import type { Cocktail, CocktailInput } from "@shared/types";
 
 type CocktailsResponse = Cocktail[];
 
@@ -26,4 +26,21 @@ export async function fetchCocktailsByIngredient(
     API_ROUTES.searchCocktails(ingredientId)
   );
   return data;
+}
+
+export async function createCocktail(payload: CocktailInput): Promise<Cocktail> {
+  const { data } = await httpClient.post<Cocktail>(API_ROUTES.cocktails, payload);
+  return data;
+}
+
+export async function updateCocktail(
+  id: number | string,
+  payload: CocktailInput
+): Promise<Cocktail> {
+  const { data } = await httpClient.put<Cocktail>(API_ROUTES.cocktail(id), payload);
+  return data;
+}
+
+export async function deleteCocktail(id: number | string): Promise<void> {
+  await httpClient.delete(API_ROUTES.cocktail(id));
 }

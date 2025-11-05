@@ -1,9 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
+  createCocktail,
+  deleteCocktail,
   fetchCocktailById,
   fetchCocktails,
   fetchCocktailsByIngredient,
+  updateCocktail,
 } from "./api";
 
 const cocktailsKeys = {
@@ -43,6 +46,43 @@ export function useCocktailsByIngredient(ingredientId: number | string) {
     queryKey: cocktailsKeys.byIngredient(ingredientId),
     queryFn: () => fetchCocktailsByIngredient(ingredientId),
     enabled: Boolean(ingredientId),
+  });
+}
+
+export function useCreateCocktailMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createCocktail,
+    onSuccess: (created) => {
+      queryClient.invalidateQueries({ queryKey: cocktailsKeys.lists() });
+      queryClient.setQueryData(cocktailsKeys.detail(created.id), created);
+    },
+  });
+}
+
+export function useUpdateCocktailMutation(id: number | string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: Parameters<typeof updateCocktail>[1]) =>
+      updateCocktail(id, payload),
+    onSuccess: (updated) => {
+      queryClient.invalidateQueries({ queryKey: cocktailsKeys.lists() });
+      queryClient.setQueryData(cocktailsKeys.detail(updated.id), updated);
+    },
+  });
+}
+
+export function useDeleteCocktailMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteCocktail,
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({ queryKey: cocktailsKeys.lists() });
+      queryClient.removeQueries({ queryKey: cocktailsKeys.detail(id) });
+    },
   });
 }
 
