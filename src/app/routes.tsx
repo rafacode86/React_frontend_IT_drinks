@@ -5,7 +5,9 @@ import { LoginPage } from "@features/auth/pages/LoginPage";
 import { RegisterPage } from "@features/auth/pages/RegisterPage";
 import { DashboardPage } from "@features/dashboard/pages/DashboardPage";
 import {
+  CocktailCreatePage,
   CocktailDetailPage,
+  CocktailEditPage,
   CocktailListPage,
 } from "@features/cocktails/pages";
 
@@ -81,8 +83,33 @@ export const router = createBrowserRouter([
             element: <CocktailListPage />,
           },
           {
+            path: "new",
+            element: <ProtectedRoute roles={["admin"]} />,
+            children: [
+              {
+                index: true,
+                element: <CocktailCreatePage />,
+              },
+            ],
+          },
+          {
             path: ":id",
-            element: <CocktailDetailPage />,
+            children: [
+              {
+                index: true,
+                element: <CocktailDetailPage />,
+              },
+              {
+                path: "edit",
+                element: <ProtectedRoute roles={["admin"]} />,
+                children: [
+                  {
+                    index: true,
+                    element: <CocktailEditPage />,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

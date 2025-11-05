@@ -17,3 +17,15 @@ export interface Cocktail {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface CocktailIngredientInput {
+  id: number;
+  measure_ml: number;
+}
+
+export interface CocktailInput {
+  name: string;
+  description?: string | null;
+  type?: string | null;
+  ingredients: CocktailIngredientInput[];
+}
