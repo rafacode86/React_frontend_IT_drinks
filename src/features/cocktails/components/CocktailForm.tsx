@@ -1,15 +1,17 @@
 import { useFieldArray, useForm } from "react-hook-form";
+import { useMemo } from "react";
 import { z } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { Cocktail, CocktailInput } from "@shared/types";
+import { useIngredients } from "@features/ingredients/queries";
 
 const ingredientSchema = z.object({
   id: z
-    .number({ invalid_type_error: "Ingresa un ID numerico" })
-    .int("Debe ser un numero entero")
-    .positive("El ID debe ser mayor a 0"),
+    .number({ invalid_type_error: "Selecciona un ingrediente" })
+    .int("Selecciona un ingrediente valido")
+    .positive("Selecciona un ingrediente"),
   measure_ml: z
     .number({ invalid_type_error: "Ingresa la medida en ml" })
     .min(0, "La medida debe ser mayor o igual a 0"),
@@ -87,6 +89,12 @@ export function CocktailForm({
     name: "ingredients",
   });
 
+  const ingredientsQuery = useIngredients();
+  const ingredientOptions = useMemo(
+    () => ingredientsQuery.data ?? [],
+    [ingredientsQuery.data]
+  );
+
   const submitting = isSubmitting || isSaving;
 
   async function handleFormSubmit(values: CocktailFormValues) {
@@ -160,8 +168,18 @@ export function CocktailForm({
               Ingredientes
             </h3>
             <p className="mt-1 text-xs text-slate-500">
-              Usa los IDs existentes y especifica la medida en mililitros.
+              Selecciona ingredientes existentes y especifica la medida en mililitros.
             </p>
+            {ingredientsQuery.isError ? (
+              <p className="text-xs text-red-400">
+                No pudimos cargar los ingredientes. Revisa tu conexion.
+              </p>
+            ) : null}
+            {ingredientsQuery.isSuccess && ingredientOptions.length === 0 ? (
+              <p className="text-xs text-amber-300">
+                Todavia no hay ingredientes creados. Visita la seccion de ingredientes para crear algunos.
+              </p>
+            ) : null}
           </div>
           <button
             type="button"
@@ -180,15 +198,23 @@ export function CocktailForm({
             >
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-                  ID ingrediente
+                  Ingrediente
                 </label>
-                <input
-                  type="number"
-                  className="rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-sm text-white outline-none transition focus:border-sky-500"
+                <select
+                  className="rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-sm text-white outline-none transition focus:border-sky-500 disabled:opacity-50"
+                  disabled={ingredientsQuery.isLoading || ingredientsQuery.isError}
                   {...register(`ingredients.${index}.id`, {
-                    valueAsNumber: true,
+                    setValueAs: (value) =>
+                      value === "" || value === undefined ? undefined : Number(value),
                   })}
-                />
+                >
+                  <option value="">Selecciona un ingrediente</option>
+                  {ingredientOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
                 {errors.ingredients?.[index]?.id ? (
                   <p className="text-xs text-red-400">
                     {errors.ingredients[index]?.id?.message}

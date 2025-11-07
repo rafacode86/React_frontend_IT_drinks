@@ -60,6 +60,12 @@ export function useLogoutMutation() {
     mutationFn: () => logoutRequest(),
     onSuccess: () => {
       tokenStorage.clearToken();
+      queryClient.setQueryData(authKeys.user(), null);
+      queryClient.removeQueries({ queryKey: authKeys.all });
+    },
+    onError: () => {
+      tokenStorage.clearToken();
+      queryClient.setQueryData(authKeys.user(), null);
       queryClient.removeQueries({ queryKey: authKeys.all });
     },
   });
