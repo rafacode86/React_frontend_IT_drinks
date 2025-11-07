@@ -10,6 +10,11 @@ import {
   CocktailEditPage,
   CocktailListPage,
 } from "@features/cocktails/pages";
+import {
+  IngredientCreatePage,
+  IngredientEditPage,
+  IngredientListPage,
+} from "@features/ingredients/pages";
 
 const landingElement = (
   <div className="flex min-h-screen flex-col items-center justify-center gap-2 bg-slate-950 text-slate-100">
@@ -30,15 +35,6 @@ const notFoundElement = (
   <div className="flex min-h-screen flex-col items-center justify-center gap-2 bg-slate-950 text-slate-100">
     <h1 className="text-2xl font-semibold">404</h1>
     <p className="text-sm text-slate-400">Esta ruta todavia no existe.</p>
-  </div>
-);
-
-const ingredientsPlaceholder = (
-  <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/60 p-10 text-center text-slate-200 shadow-lg shadow-slate-950/60">
-    <h2 className="text-2xl font-semibold">Modulo de ingredientes</h2>
-    <p className="max-w-md text-sm text-slate-400">
-      Gestion de inventario, clasificacion y contenido alcoholico llegaran en el proximo bloque.
-    </p>
   </div>
 );
 
@@ -114,8 +110,33 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "ingredients/*",
-        element: ingredientsPlaceholder,
+        path: "ingredients",
+        children: [
+          {
+            index: true,
+            element: <IngredientListPage />,
+          },
+          {
+            path: "new",
+            element: <ProtectedRoute roles={["admin"]} />,
+            children: [
+              {
+                index: true,
+                element: <IngredientCreatePage />,
+              },
+            ],
+          },
+          {
+            path: ":id/edit",
+            element: <ProtectedRoute roles={["admin"]} />,
+            children: [
+              {
+                index: true,
+                element: <IngredientEditPage />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
