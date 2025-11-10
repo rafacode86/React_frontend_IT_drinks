@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+IT Drinks Frontend
+Frontend en React + Vite para gestionar cócteles e ingredientes de la plataforma IT Drinks. Incluye autenticación con roles, panel administrativo y vistas especializadas para CRUD de recetas e insumos.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stack
+Vite + React + TypeScript
+Tailwind CSS para el diseño
+TanStack Query para caché y fetching
+React Hook Form + Zod para formularios
+Axios con interceptores (token Bearer desde Passport/Laravel)
+Estructura
+src/
+├─ app/               # Proveedores globales + rutas protegidas
+├─ shared/            # Constantes, tipos, hooks y componentes comunes
+├─ features/
+│  ├─ auth/           # Login/registro, provider y hooks de sesión
+│  ├─ dashboard/      # Panel principal tras autenticarse
+│  ├─ cocktails/      # Listado, detalle, creación/edición de cócteles
+│  └─ ingredients/    # Despensa, formularios y búsqueda por ingrediente
+└─ main.tsx           # Entrada que monta AppProviders
+Scripts
+Comando	Descripción
+npm install	Instala dependencias
+npm run dev	Arranca Vite (http://localhost:5173)
 
-Currently, two official plugins are available:
+Rutas principales
+/login, /register: autenticación pública.
+/app/dashboard: vista principal protegida.
+/app/cocktails: listado, filtro y CRUD (admin).
+/app/ingredients: despensa con filtros, búsqueda y acceso a cócteles relacionados.
+Conexión con la API
+Todas las llamadas pasan por src/shared/lib/http/client.ts, donde se configura Axios con el baseURL (VITE_API_URL) y el interceptor que añade el token y limpia sesión en 401.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Variables de entorno
+Crea un .env con al menos:
 
-## React Compiler
+VITE_API_URL=http://localhost:8000/api
+Flujo de trabajo sugerido
+npm install
+Configura .env.
+npm run dev para desarrollo.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Descripción de inicio de sesión:
+inicio de sesión con usuario de prueba(permisos de usuario)
+ usuario: prueba@prueba.com
+ password: 12345678
+ <img width="641" height="544" alt="image" src="https://github.com/user-attachments/assets/a10e8f60-d169-46f4-b95f-c6eb3823e589" />
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+inicio de sesión con administrador(permisos de administrador)
+ usuario: admin@admin.com
+ password: 12345678
+ <img width="712" height="616" alt="image" src="https://github.com/user-attachments/assets/ee4ab61d-d38a-4d74-b16e-7aabef0774e9" />
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Si se quiere iniciar sesión registrándose:
+ Botón 'regístrate aqui' y rellenar formulario.
+<img width="585" height="717" alt="image" src="https://github.com/user-attachments/assets/cd18c3cb-6f5c-455c-a690-07464afa5d1e" />
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Una vez iniciada la sesión(user):
+user, una pantalla principal para elegir que quieres ver cocktails o ingredientes:
+<img width="1865" height="691" alt="image" src="https://github.com/user-attachments/assets/7d4627e2-cacb-4abb-a670-6739f8fdb226" />
+cocktails, listado de cocktails:
+<img width="1638" height="802" alt="image" src="https://github.com/user-attachments/assets/c44b5e53-457e-43ba-a2a6-86a9462c7df5" />
+ingredientes, listado de ingredientes, con accion a los cocktails con ese ingrediente:
+<img width="1540" height="746" alt="image" src="https://github.com/user-attachments/assets/805cf70b-2cb2-44f8-b5a6-7b97b7b7ea13" />
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Una vez iniciada la sesión(admin):
+pantalla principal igual
+cocktails aparece una pestaña superior para crear
+<img width="1498" height="506" alt="image" src="https://github.com/user-attachments/assets/ca750509-fa2b-462e-80c3-863b728f122e" />
+Formulario para crear cocktail, en este se especifica nombre, categoria, descripción, a parte se tiene que eligir ingredientes de la lista de ingredientes, si no esta hay que crearlo antes, en el caso de que el ingrediente sea liquido poner los ml de ese ingrediente.
+<img width="1443" height="809" alt="image" src="https://github.com/user-attachments/assets/d7778764-2a5d-4c5c-a475-f746979b7712" />
+en ingredientes tambien aparece este boton para crear.
+Formulario para crear ingrediente, en este se especidica, nombre, marca, origen, clasificación y en el caso de ser alcoholico el %de alcohol.
+<img width="1502" height="701" alt="image" src="https://github.com/user-attachments/assets/89de68d8-23d4-4709-9d94-002dbf60a533" />
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+ 
