@@ -103,7 +103,7 @@ export function DashboardPage() {
                 onClick={() => navigate("/app/cocktails")}
                 className="rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400"
               >
-                Crear coctel
+                Ver cocktels
               </button>
               <button
                 type="button"
