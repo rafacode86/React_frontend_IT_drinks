@@ -2,11 +2,13 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppLayout, EmptyState, Loader } from "@shared/components";
+import type { Ingredient } from "@shared/types";
 import { useToast } from "@shared/hooks";
 
 import { useAuth } from "@features/auth/hooks";
 
 import {
+  IngredientCocktailsPanel,
   IngredientFilters,
   IngredientSkeletonTable,
   IngredientTable,
@@ -34,6 +36,7 @@ export function IngredientListPage() {
     "all" | "alcoholic" | "soda" | "juice" | "garnish"
   >("all");
   const [search, setSearch] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null);
 
   const isAdmin = scopes.includes("admin");
 
@@ -66,6 +69,10 @@ export function IngredientListPage() {
 
   function handleEdit(ingredientId: number) {
     navigate(`/app/ingredients/${ingredientId}/edit`);
+  }
+
+  function handleViewCocktails(ingredient: Ingredient) {
+    setSelectedIngredient(ingredient);
   }
 
   async function handleDelete(ingredientId: number, name: string) {
@@ -138,6 +145,7 @@ export function IngredientListPage() {
               isAdmin={isAdmin}
               onEdit={(ingredient) => handleEdit(ingredient.id)}
               onDelete={(ingredient) => handleDelete(ingredient.id, ingredient.name)}
+              onViewCocktails={handleViewCocktails}
             />
           ) : (
             <EmptyState
@@ -158,6 +166,13 @@ export function IngredientListPage() {
           )
         ) : null}
       </section>
+
+      {selectedIngredient ? (
+        <IngredientCocktailsPanel
+          ingredient={selectedIngredient}
+          onClose={() => setSelectedIngredient(null)}
+        />
+      ) : null}
     </AppLayout>
   );
 }

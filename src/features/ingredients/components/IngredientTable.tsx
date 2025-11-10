@@ -8,6 +8,7 @@ type IngredientTableProps = {
   ingredients: Ingredient[];
   onEdit?: (ingredient: Ingredient) => void;
   onDelete?: (ingredient: Ingredient) => void;
+  onViewCocktails?: (ingredient: Ingredient) => void;
   isAdmin?: boolean;
 };
 
@@ -22,6 +23,7 @@ export function IngredientTable({
   ingredients,
   onEdit,
   onDelete,
+  onViewCocktails,
   isAdmin,
 }: IngredientTableProps) {
   const sorted = useMemo(
@@ -50,7 +52,7 @@ export function IngredientTable({
             <th scope="col" className="px-4 py-3 text-left">
               Origen
             </th>
-            {isAdmin ? (
+            {(isAdmin || onViewCocktails) ? (
               <th scope="col" className="px-4 py-3 text-right">
                 Acciones
               </th>
@@ -89,23 +91,36 @@ export function IngredientTable({
               <td className="px-4 py-4 text-slate-300">
                 {ingredient.origin ?? "Desconocido"}
               </td>
-              {isAdmin ? (
+              {(isAdmin || onViewCocktails) ? (
                 <td className="px-4 py-4">
                   <div className="flex justify-end gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
-                    <button
-                      type="button"
-                      onClick={() => onEdit?.(ingredient)}
-                      className="rounded-full border border-slate-700 px-3 py-1 text-slate-200 transition hover:border-sky-500/70 hover:text-white"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => onDelete?.(ingredient)}
-                      className="rounded-full border border-red-500/70 px-3 py-1 text-red-200 transition hover:bg-red-500/10"
-                    >
-                      Borrar
-                    </button>
+                    {onViewCocktails ? (
+                      <button
+                        type="button"
+                        onClick={() => onViewCocktails(ingredient)}
+                        className="rounded-full border border-slate-700 px-3 py-1 text-slate-200 transition hover:border-sky-500/70 hover:text-white"
+                      >
+                        Cocteles
+                      </button>
+                    ) : null}
+                    {isAdmin ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => onEdit?.(ingredient)}
+                          className="rounded-full border border-slate-700 px-3 py-1 text-slate-200 transition hover:border-sky-500/70 hover:text-white"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onDelete?.(ingredient)}
+                          className="rounded-full border border-red-500/70 px-3 py-1 text-red-200 transition hover:bg-red-500/10"
+                        >
+                          Borrar
+                        </button>
+                      </>
+                    ) : null}
                   </div>
                 </td>
               ) : null}
