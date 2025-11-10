@@ -41,7 +41,7 @@ export function IngredientTable({
               Ingrediente
             </th>
             <th scope="col" className="px-4 py-3 text-left">
-              Tipo
+              Marca
             </th>
             <th scope="col" className="px-4 py-3 text-left">
               Clasificacion

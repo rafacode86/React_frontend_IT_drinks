@@ -3,8 +3,8 @@ import type { IngredientClassification } from "@shared/types";
 const CLASSIFICATIONS: Array<{ value: IngredientClassification; label: string }> = [
   { value: "alcoholic", label: "Alcoholico" },
   { value: "soda", label: "Soda" },
-  { value: "juice", label: "Jugo" },
-  { value: "garnish", label: "Garnish" },
+  { value: "juice", label: "Zumo" },
+  { value: "garnish", label: "Aderezo" },
 ];
 
 type IngredientFiltersProps = {
