@@ -100,7 +100,7 @@ export function IngredientTable({
                         onClick={() => onViewCocktails(ingredient)}
                         className="rounded-full border border-slate-700 px-3 py-1 text-slate-200 transition hover:border-sky-500/70 hover:text-white"
                       >
-                        Cocteles
+                        Cocktails
                       </button>
                     ) : null}
                     {isAdmin ? (

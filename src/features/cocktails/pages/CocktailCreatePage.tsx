@@ -10,7 +10,7 @@ import { useCreateCocktailMutation } from "../queries";
 
 const NAVIGATION_ITEMS = [
   { to: "/app/dashboard", label: "Panel" },
-  { to: "/app/cocktails", label: "Cocteles" },
+  { to: "/app/cocktails", label: "Cocktails" },
   { to: "/app/ingredients", label: "Ingredientes" },
 ];
 
@@ -26,7 +26,7 @@ export function CocktailCreatePage() {
     if (!isAdmin) {
       toast({
         title: "Acceso restringido",
-        description: "Solo los administradores pueden crear cocteles.",
+        description: "Solo los administradores pueden crear cocktails.",
         variant: "error",
       });
       return;

@@ -42,7 +42,7 @@ export function IngredientCocktailsPanel({
         </button>
         <header className="space-y-1 pr-16">
           <p className="text-xs uppercase tracking-[0.4em] text-slate-500">
-            Cocteles con
+            Cocktails con
           </p>
           <h2 className="text-2xl font-semibold text-white">{ingredient.name}</h2>
           <p className="text-sm text-slate-400">
@@ -56,7 +56,7 @@ export function IngredientCocktailsPanel({
 
         {cocktailsQuery.isError ? (
           <EmptyState
-            title="No se pudieron cargar los cocteles"
+            title="No se pudieron cargar los cocktails"
             description="Revisa tu conexion e intenta nuevamente."
           />
         ) : null}
@@ -70,7 +70,7 @@ export function IngredientCocktailsPanel({
             </div>
           ) : (
             <EmptyState
-              title="Sin cocteles asociados"
+              title="Sin cocktails asociados"
               description="Aun no hay recetas que utilicen este ingrediente."
             />
           )

@@ -9,7 +9,7 @@ export function RegisterPage() {
         <header className="space-y-1 text-center">
           <h1 className="text-2xl font-semibold">Crea tu cuenta</h1>
           <p className="text-sm text-slate-400">
-            Unete para acceder al recetario de cocteles.
+            Unete para acceder al recetario de cocktails.
           </p>
         </header>
 

@@ -14,7 +14,7 @@ import { useCocktails } from "../queries";
 
 const NAVIGATION_ITEMS = [
   { to: "/app/dashboard", label: "Panel" },
-  { to: "/app/cocktails", label: "Cocteles" },
+  { to: "/app/cocktails", label: "Cocktails" },
   { to: "/app/ingredients", label: "Ingredientes" },
 ];
 
@@ -38,7 +38,7 @@ export function CocktailListPage() {
     if (!isAdmin) {
       toast({
         title: "Acceso restringido",
-        description: "Solo los administradores pueden crear cocteles.",
+        description: "Solo los administradores pueden crear cocktails.",
         variant: "error",
       });
       return;
@@ -49,7 +49,7 @@ export function CocktailListPage() {
 
   return (
     <AppLayout
-      title="Carta de Cocteles"
+      title="Carta de Cocktails"
       description="Disfruta una coleccion de recetas curadas para cualquier ocasion."
       navigation={NAVIGATION_ITEMS}
       actions={
@@ -59,7 +59,7 @@ export function CocktailListPage() {
           className="rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={!isAdmin}
         >
-          Nuevo coctel
+          Nuevo cocktail
         </button>
       }
     >
@@ -67,7 +67,7 @@ export function CocktailListPage() {
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-xl font-semibold text-white">
-              Cocteles destacados
+              Cocktails destacados
             </h2>
             <p className="text-sm text-slate-400">
               Utiliza los filtros para encontrar la mezcla perfecta.
@@ -110,7 +110,7 @@ export function CocktailListPage() {
             <CocktailGrid cocktails={cocktailsQuery.data} />
           ) : (
             <EmptyState
-              title="No hay cocteles disponibles"
+              title="No hay cocktails disponibles"
               description="Empieza creando tu primera receta o agrega ingredientes para inspirarte."
               action={
                 isAuthenticated ? (
@@ -119,7 +119,7 @@ export function CocktailListPage() {
                     onClick={handleCreate}
                     className="rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400"
                   >
-                    Crear coctel
+                    Crear cocktail
                   </button>
                 ) : null
               }

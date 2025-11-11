@@ -12,7 +12,7 @@ import { useCocktail } from "../queries";
 
 const NAVIGATION_ITEMS = [
   { to: "/app/dashboard", label: "Panel" },
-  { to: "/app/cocktails", label: "Cocteles" },
+  { to: "/app/cocktails", label: "Cocktails" },
   { to: "/app/ingredients", label: "Ingredientes" },
 ];
 

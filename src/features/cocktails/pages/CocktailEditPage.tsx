@@ -14,7 +14,7 @@ import {
 
 const NAVIGATION_ITEMS = [
   { to: "/app/dashboard", label: "Panel" },
-  { to: "/app/cocktails", label: "Cocteles" },
+  { to: "/app/cocktails", label: "Cocktails" },
   { to: "/app/ingredients", label: "Ingredientes" },
 ];
 
@@ -36,7 +36,7 @@ export function CocktailEditPage() {
       <AppLayout
         navigation={NAVIGATION_ITEMS}
         title="Acceso restringido"
-        description="Solo los administradores pueden editar cocteles."
+        description="Solo los administradores pueden editar cocktails."
       >
         <ErrorState message="Contacta con un administrador para solicitar acceso." />
       </AppLayout>

@@ -9,7 +9,7 @@ export function LoginPage() {
         <header className="space-y-1 text-center">
           <h1 className="text-2xl font-semibold">Inicia sesion</h1>
           <p className="text-sm text-slate-400">
-            Gestiona tus cocteles favoritos con IT Drinks.
+            Gestiona tus cocktails favoritos con IT Drinks.
           </p>
         </header>
 

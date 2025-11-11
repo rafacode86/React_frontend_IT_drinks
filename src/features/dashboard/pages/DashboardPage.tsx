@@ -7,7 +7,7 @@ import { useAuth } from "@features/auth/hooks";
 
 const NAVIGATION_ITEMS = [
   { to: "/app/dashboard", label: "Panel" },
-  { to: "/app/cocktails", label: "Cocteles" },
+  { to: "/app/cocktails", label: "Cocktails" },
   { to: "/app/ingredients", label: "Ingredientes" },
 ];
 
@@ -94,7 +94,7 @@ export function DashboardPage() {
               {user?.name ?? "Mixologo"}
             </h2>
             <p className="mt-4 max-w-xl text-sm text-slate-300 md:text-base">
-              Explora el catalogo de cocteles, administra ingredientes y crea
+              Explora el catalogo de cocktails, administra ingredientes y crea
               experiencias memorables para tu barra digital.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -103,7 +103,7 @@ export function DashboardPage() {
                 onClick={() => navigate("/app/cocktails")}
                 className="rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400"
               >
-                Ver cocktels
+                Ver cocktails
               </button>
               <button
                 type="button"
@@ -120,7 +120,7 @@ export function DashboardPage() {
             </h3>
             <div className="mt-4 space-y-4 text-sm text-slate-300">
               <p>
-                Personaliza esta seccion con tus ultimos cocteles, borradores o
+                Personaliza esta seccion con tus ultimos cocktails, borradores o
                 recetas destacadas para el equipo.
               </p>
               <p className="text-slate-500">
